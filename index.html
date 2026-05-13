@@ -6,1008 +6,518 @@
 <title>Pro-Vision Home Show — Shift Poll</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap');
-
   :root {
-    --red:       #D14124;
-    --red-dark:  #A8331B;
-    --red-glow:  rgba(209,65,36,0.18);
-    --navy:      #00263E;
-    --teal:      #05C3DE;
-    --teal-light:#88DBDF;
-    --gold:      #F6BE00;
-    --cream:     #F5F0E8;
-    --white:     #FFFFFF;
-    --gray:      #6B7280;
-    --gray-light:#E5E7EB;
-    --success:   #16A34A;
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--navy);
-    min-height: 100vh;
-    color: var(--cream);
-    position: relative;
-    overflow-x: hidden;
-  }
-
-  /* Background texture */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background:
-      radial-gradient(ellipse at 10% 20%, rgba(5,195,222,0.08) 0%, transparent 50%),
-      radial-gradient(ellipse at 90% 80%, rgba(209,65,36,0.1) 0%, transparent 50%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .container {
-    position: relative;
-    z-index: 1;
-    max-width: 680px;
-    margin: 0 auto;
-    padding: 32px 20px 60px;
-  }
-
-  /* ── HEADER ─────────────────────────────────────────── */
-  .header {
-    text-align: center;
-    margin-bottom: 36px;
-  }
-
-  .brand-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--red);
-    color: white;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 13px;
-    letter-spacing: 2px;
-    padding: 6px 16px 4px;
-    border-radius: 2px;
-    margin-bottom: 20px;
-  }
-
-  .brand-badge::before {
-    content: '✦';
-    color: var(--gold);
-    font-size: 10px;
-  }
-
-  .brand-badge::after {
-    content: '✦';
-    color: var(--gold);
-    font-size: 10px;
-  }
-
-  .title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(42px, 10vw, 68px);
-    line-height: 0.9;
-    letter-spacing: 1px;
-    color: var(--white);
-    margin-bottom: 8px;
-  }
-
-  .title span { color: var(--teal); }
-
-  .subtitle {
-    font-size: 14px;
-    color: var(--teal-light);
-    font-weight: 400;
-    letter-spacing: 0.5px;
-    margin-bottom: 24px;
-  }
-
-  .announcement {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(5,195,222,0.25);
-    border-radius: 10px;
-    padding: 16px 20px;
-    font-size: 13.5px;
-    color: rgba(245,240,232,0.8);
-    line-height: 1.6;
-    text-align: left;
-  }
-
-  .announcement strong { color: var(--teal); }
-
-  /* ── NAME INPUT ─────────────────────────────────────── */
-  .name-section {
-    margin-bottom: 28px;
-  }
-
-  .input-label {
-    display: block;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--teal-light);
-    margin-bottom: 8px;
-  }
-
-  .name-input {
-    width: 100%;
-    background: rgba(255,255,255,0.06);
-    border: 1.5px solid rgba(255,255,255,0.12);
-    border-radius: 8px;
-    padding: 14px 16px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    font-weight: 500;
-    color: var(--white);
-    outline: none;
-    transition: border-color 0.2s, background 0.2s;
-  }
-
-  .name-input::placeholder { color: rgba(255,255,255,0.3); }
-
-  .name-input:focus {
-    border-color: var(--teal);
-    background: rgba(5,195,222,0.06);
-  }
-
-  /* ── SECTION HEADERS ────────────────────────────────── */
-  .section-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 28px 0 12px;
-  }
-
-  .section-tag {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 11px;
-    letter-spacing: 2px;
-    color: var(--gold);
-    background: rgba(246,190,0,0.12);
-    border: 1px solid rgba(246,190,0,0.3);
-    padding: 3px 10px 1px;
-    border-radius: 2px;
-  }
-
-  .section-line {
-    flex: 1;
-    height: 1px;
-    background: rgba(255,255,255,0.08);
-  }
-
-  /* ── DAY CARD ────────────────────────────────────────── */
-  .day-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 12px;
-    overflow: hidden;
-    margin-bottom: 12px;
-    transition: border-color 0.2s;
-  }
-
-  .day-card:hover { border-color: rgba(5,195,222,0.2); }
-
-  .day-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px 18px;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-  }
-
-  .day-name {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 20px;
-    letter-spacing: 1px;
-    color: var(--white);
-  }
-
-  .day-hours {
-    font-size: 12px;
-    color: var(--teal-light);
-    font-weight: 500;
-  }
-
-  .day-body {
-    padding: 12px 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  /* ── SHIFT BUTTON ─────────────────────────────────────── */
-  .shift-btn {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    padding: 12px 16px;
-    background: rgba(255,255,255,0.04);
-    border: 1.5px solid rgba(255,255,255,0.1);
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.18s ease;
-    text-align: left;
-    color: var(--cream);
-  }
-
-  .shift-btn:hover {
-    background: rgba(5,195,222,0.08);
-    border-color: rgba(5,195,222,0.4);
-    transform: translateX(2px);
-  }
-
-  .shift-btn.selected {
-    background: rgba(209,65,36,0.15);
-    border-color: var(--red);
-    transform: translateX(2px);
-  }
-
-  .shift-btn.selected .shift-label { color: var(--white); }
-  .shift-btn.selected .shift-check { opacity: 1; transform: scale(1); }
-
-  .shift-left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .shift-icon {
-    width: 32px;
-    height: 32px;
-    border-radius: 6px;
-    background: rgba(255,255,255,0.06);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    flex-shrink: 0;
-    transition: background 0.18s;
-  }
-
-  .shift-btn.selected .shift-icon {
-    background: var(--red);
-  }
-
-  .shift-info { line-height: 1 }
-
-  .shift-label {
-    font-size: 14px;
-    font-weight: 600;
-    color: rgba(245,240,232,0.85);
-    display: block;
-    margin-bottom: 3px;
-  }
-
-  .shift-time {
-    font-size: 12px;
-    color: var(--gray);
-    font-weight: 400;
-  }
-
-  .shift-btn.selected .shift-time { color: rgba(209,65,36,0.8); }
-
-  .shift-right {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .voter-count {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--teal);
-    background: rgba(5,195,222,0.1);
-    border: 1px solid rgba(5,195,222,0.2);
-    border-radius: 20px;
-    padding: 2px 9px;
-    min-width: 32px;
-    text-align: center;
-    transition: all 0.2s;
-  }
-
-  .shift-check {
-    width: 20px;
-    height: 20px;
-    background: var(--red);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transform: scale(0.5);
-    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-    flex-shrink: 0;
-  }
-
-  .shift-check svg { width: 10px; height: 10px; }
-
-  /* ── SETUP CARD ───────────────────────────────────────── */
-  .setup-card {
-    background: rgba(246,190,0,0.06);
-    border: 1px solid rgba(246,190,0,0.2);
-    border-radius: 12px;
-    padding: 14px 18px;
-    margin-bottom: 12px;
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-  }
-
-  .setup-icon {
-    font-size: 20px;
-    margin-top: 2px;
-    flex-shrink: 0;
-  }
-
-  .setup-info { flex: 1; }
-
-  .setup-name {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 18px;
-    letter-spacing: 1px;
-    color: var(--gold);
-    margin-bottom: 4px;
-  }
-
-  .setup-time {
-    font-size: 13px;
-    color: rgba(245,240,232,0.6);
-  }
-
-  .setup-btn {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 8px 14px;
-    background: rgba(246,190,0,0.12);
-    border: 1.5px solid rgba(246,190,0,0.3);
-    border-radius: 6px;
-    color: var(--gold);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    cursor: pointer;
-    transition: all 0.18s;
-    white-space: nowrap;
-    align-self: center;
-  }
-
-  .setup-btn:hover {
-    background: rgba(246,190,0,0.2);
-    border-color: var(--gold);
-  }
-
-  .setup-btn.selected {
-    background: var(--gold);
-    color: var(--navy);
-  }
-
-  .setup-btn.selected::before { content: '✓  '; }
-
-  /* ── SUBMIT ───────────────────────────────────────────── */
-  .submit-section {
-    margin-top: 36px;
-  }
-
-  .submit-btn {
-    width: 100%;
-    padding: 17px;
-    background: var(--red);
-    border: none;
-    border-radius: 10px;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 22px;
-    letter-spacing: 2px;
-    color: var(--white);
-    cursor: pointer;
-    transition: all 0.2s;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .submit-btn::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 60%);
-    pointer-events: none;
-  }
-
-  .submit-btn:hover {
-    background: var(--red-dark);
-    transform: translateY(-1px);
-    box-shadow: 0 8px 24px var(--red-glow);
-  }
-
-  .submit-btn:active { transform: translateY(0); }
-
-  .submit-btn:disabled {
-    background: rgba(255,255,255,0.1);
-    color: rgba(255,255,255,0.3);
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-  }
-
-  /* ── SUCCESS STATE ────────────────────────────────────── */
-  .success-panel {
-    display: none;
-    text-align: center;
-    padding: 48px 24px;
-    animation: fadeUp 0.4s ease;
-  }
-
-  .success-icon {
-    width: 72px;
-    height: 72px;
-    background: var(--red);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 20px;
-    font-size: 32px;
-  }
-
-  .success-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 40px;
-    letter-spacing: 2px;
-    color: var(--white);
-    margin-bottom: 8px;
-  }
-
-  .success-sub {
-    font-size: 14px;
-    color: rgba(245,240,232,0.6);
-    line-height: 1.6;
-    margin-bottom: 28px;
-  }
-
-  .selection-summary {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 10px;
-    padding: 20px;
-    text-align: left;
-  }
-
-  .summary-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 6px 0;
-    font-size: 13px;
-    color: rgba(245,240,232,0.75);
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-  }
-
-  .summary-item:last-child { border-bottom: none; }
-  .summary-item::before { content: '✓'; color: var(--teal); font-weight: 700; }
-
-  .reset-btn {
-    margin-top: 20px;
-    background: none;
-    border: 1.5px solid rgba(255,255,255,0.15);
-    border-radius: 8px;
-    color: rgba(255,255,255,0.5);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .reset-btn:hover {
-    border-color: rgba(255,255,255,0.3);
-    color: var(--white);
-  }
-
-  /* ── RESULTS PANEL ────────────────────────────────────── */
-  .results-toggle {
-    margin-top: 24px;
-    text-align: center;
-  }
-
-  .results-btn {
-    background: none;
-    border: 1.5px solid rgba(5,195,222,0.3);
-    border-radius: 8px;
-    color: var(--teal-light);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: all 0.2s;
-    letter-spacing: 0.5px;
-  }
-
-  .results-btn:hover {
-    background: rgba(5,195,222,0.06);
-    border-color: var(--teal);
-    color: var(--teal);
-  }
-
-  .results-panel {
-    display: none;
-    margin-top: 16px;
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 12px;
-    padding: 20px;
-    animation: fadeUp 0.3s ease;
-  }
-
-  .results-panel.visible { display: block; }
-
-  .results-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 18px;
-    letter-spacing: 2px;
-    color: var(--teal);
-    margin-bottom: 16px;
-  }
-
-  .result-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 10px;
-    font-size: 12px;
-  }
-
-  .result-label {
-    min-width: 140px;
-    color: rgba(245,240,232,0.6);
-    font-weight: 500;
-  }
-
-  .result-bar-wrap {
-    flex: 1;
-    height: 6px;
-    background: rgba(255,255,255,0.08);
-    border-radius: 3px;
-    overflow: hidden;
-  }
-
-  .result-bar {
-    height: 100%;
-    background: var(--teal);
-    border-radius: 3px;
-    transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-    width: 0%;
-  }
-
-  .result-count {
-    min-width: 24px;
-    text-align: right;
-    color: var(--teal);
-    font-weight: 700;
-    font-size: 13px;
-  }
-
-  /* ── FOOTER ──────────────────────────────────────────── */
-  .footer {
-    text-align: center;
-    margin-top: 36px;
-    font-size: 11px;
-    color: rgba(245,240,232,0.25);
-    letter-spacing: 1px;
-  }
-
-  /* ── ANIMATIONS ──────────────────────────────────────── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  .day-card { animation: fadeUp 0.4s ease both; }
-  .day-card:nth-child(1) { animation-delay: 0.05s; }
-  .day-card:nth-child(2) { animation-delay: 0.10s; }
-  .day-card:nth-child(3) { animation-delay: 0.15s; }
-  .day-card:nth-child(4) { animation-delay: 0.20s; }
-
-  .error-msg {
-    color: var(--red);
-    font-size: 13px;
-    font-weight: 600;
-    margin-top: 8px;
-    display: none;
-    text-align: center;
-  }
-
-  .error-msg.visible { display: block; }
+    --red:#D14124;--red-dark:#A8331B;--red-glow:rgba(209,65,36,0.18);
+    --navy:#00263E;--teal:#05C3DE;--teal-light:#88DBDF;--gold:#F6BE00;
+    --cream:#F5F0E8;--white:#FFFFFF;--gray:#6B7280;--gray-light:#E5E7EB;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',sans-serif;background:var(--navy);min-height:100vh;color:var(--cream);overflow-x:hidden}
+  body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 10% 20%,rgba(5,195,222,0.08) 0%,transparent 50%),radial-gradient(ellipse at 90% 80%,rgba(209,65,36,0.1) 0%,transparent 50%);pointer-events:none;z-index:0}
+  .container{position:relative;z-index:1;max-width:720px;margin:0 auto;padding:32px 20px 60px}
+
+  /* HEADER */
+  .header{text-align:center;margin-bottom:36px}
+  .brand-badge{display:inline-flex;align-items:center;gap:8px;background:var(--red);color:white;font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:2px;padding:6px 16px 4px;border-radius:2px;margin-bottom:20px}
+  .brand-badge::before,.brand-badge::after{content:'✦';color:var(--gold);font-size:10px}
+  .title{font-family:'Bebas Neue',sans-serif;font-size:clamp(42px,10vw,68px);line-height:0.9;letter-spacing:1px;color:var(--white);margin-bottom:8px}
+  .title span{color:var(--teal)}
+  .subtitle{font-size:14px;color:var(--teal-light);font-weight:400;letter-spacing:.5px;margin-bottom:24px}
+  .announcement{background:rgba(255,255,255,0.05);border:1px solid rgba(5,195,222,0.25);border-radius:10px;padding:16px 20px;font-size:13.5px;color:rgba(245,240,232,0.8);line-height:1.6;text-align:left}
+  .announcement strong{color:var(--teal)}
+
+  /* NAV TABS */
+  .nav-tabs{display:flex;gap:8px;margin-bottom:28px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:6px}
+  .nav-tab{flex:1;padding:10px;background:none;border:none;border-radius:7px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;color:rgba(245,240,232,0.5);cursor:pointer;transition:all .2s;letter-spacing:.5px}
+  .nav-tab.active{background:var(--red);color:var(--white)}
+  .nav-tab:not(.active):hover{color:var(--cream);background:rgba(255,255,255,0.06)}
+
+  /* FORM PAGE */
+  .page{display:none}.page.active{display:block}
+  .input-label{display:block;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--teal-light);margin-bottom:8px}
+  .name-input{width:100%;background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.12);border-radius:8px;padding:14px 16px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;color:var(--white);outline:none;transition:border-color .2s,background .2s}
+  .name-input::placeholder{color:rgba(255,255,255,0.3)}
+  .name-input:focus{border-color:var(--teal);background:rgba(5,195,222,0.06)}
+  .section-header{display:flex;align-items:center;gap:10px;margin:28px 0 12px}
+  .section-tag{font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:2px;color:var(--gold);background:rgba(246,190,0,0.12);border:1px solid rgba(246,190,0,0.3);padding:3px 10px 1px;border-radius:2px}
+  .section-line{flex:1;height:1px;background:rgba(255,255,255,0.08)}
+  .day-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;overflow:hidden;margin-bottom:12px;transition:border-color .2s;animation:fadeUp .4s ease both}
+  .day-card:hover{border-color:rgba(5,195,222,0.2)}
+  .day-card:nth-child(1){animation-delay:.05s}.day-card:nth-child(2){animation-delay:.1s}.day-card:nth-child(3){animation-delay:.15s}.day-card:nth-child(4){animation-delay:.2s}
+  .day-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.06)}
+  .day-name{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:1px;color:var(--white)}
+  .day-hours{font-size:12px;color:var(--teal-light);font-weight:500}
+  .day-body{padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+  .shift-btn{display:flex;align-items:center;justify-content:space-between;width:100%;padding:12px 16px;background:rgba(255,255,255,0.04);border:1.5px solid rgba(255,255,255,0.1);border-radius:8px;cursor:pointer;transition:all .18s ease;text-align:left;color:var(--cream)}
+  .shift-btn:hover{background:rgba(5,195,222,0.08);border-color:rgba(5,195,222,0.4);transform:translateX(2px)}
+  .shift-btn.selected{background:rgba(209,65,36,0.15);border-color:var(--red);transform:translateX(2px)}
+  .shift-btn.selected .shift-label{color:var(--white)}
+  .shift-btn.selected .shift-check{opacity:1;transform:scale(1)}
+  .shift-left{display:flex;align-items:center;gap:12px}
+  .shift-icon{width:32px;height:32px;border-radius:6px;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;transition:background .18s}
+  .shift-btn.selected .shift-icon{background:var(--red)}
+  .shift-info{line-height:1}
+  .shift-label{font-size:14px;font-weight:600;color:rgba(245,240,232,0.85);display:block;margin-bottom:3px}
+  .shift-time{font-size:12px;color:var(--gray);font-weight:400}
+  .shift-btn.selected .shift-time{color:rgba(209,65,36,0.8)}
+  .shift-right{display:flex;align-items:center;gap:10px}
+  .shift-check{width:20px;height:20px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(.5);transition:all .2s cubic-bezier(0.34,1.56,0.64,1);flex-shrink:0}
+  .shift-check svg{width:10px;height:10px}
+  .setup-card{background:rgba(246,190,0,0.06);border:1px solid rgba(246,190,0,0.2);border-radius:12px;padding:14px 18px;margin-bottom:12px;display:flex;align-items:flex-start;gap:14px}
+  .setup-icon{font-size:20px;margin-top:2px;flex-shrink:0}
+  .setup-info{flex:1}
+  .setup-name{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px;color:var(--gold);margin-bottom:4px}
+  .setup-time{font-size:13px;color:rgba(245,240,232,0.6)}
+  .setup-btn{display:flex;align-items:center;gap:6px;padding:8px 14px;background:rgba(246,190,0,0.12);border:1.5px solid rgba(246,190,0,0.3);border-radius:6px;color:var(--gold);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;letter-spacing:.5px;cursor:pointer;transition:all .18s;white-space:nowrap;align-self:center}
+  .setup-btn:hover{background:rgba(246,190,0,0.2);border-color:var(--gold)}
+  .setup-btn.selected{background:var(--gold);color:var(--navy)}
+  .setup-btn.selected::before{content:'✓  '}
+  .submit-section{margin-top:36px}
+  .submit-btn{width:100%;padding:17px;background:var(--red);border:none;border-radius:10px;font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:var(--white);cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+  .submit-btn::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.1) 0%,transparent 60%);pointer-events:none}
+  .submit-btn:hover{background:var(--red-dark);transform:translateY(-1px);box-shadow:0 8px 24px var(--red-glow)}
+  .submit-btn:active{transform:translateY(0)}
+  .submit-btn:disabled{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.3);cursor:not-allowed;transform:none;box-shadow:none}
+  .error-msg{color:var(--red);font-size:13px;font-weight:600;margin-top:8px;display:none;text-align:center}
+  .error-msg.visible{display:block}
+
+  /* SUCCESS */
+  .success-panel{display:none;text-align:center;padding:48px 24px;animation:fadeUp .4s ease}
+  .success-icon{width:72px;height:72px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:32px}
+  .success-title{font-family:'Bebas Neue',sans-serif;font-size:40px;letter-spacing:2px;color:var(--white);margin-bottom:8px}
+  .success-sub{font-size:14px;color:rgba(245,240,232,0.6);line-height:1.6;margin-bottom:28px}
+  .selection-summary{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:20px;text-align:left}
+  .summary-item{display:flex;align-items:center;gap:10px;padding:6px 0;font-size:13px;color:rgba(245,240,232,0.75);border-bottom:1px solid rgba(255,255,255,0.05)}
+  .summary-item:last-child{border-bottom:none}
+  .summary-item::before{content:'✓';color:var(--teal);font-weight:700}
+  .reset-btn{margin-top:20px;background:none;border:1.5px solid rgba(255,255,255,0.15);border-radius:8px;color:rgba(255,255,255,0.5);font-family:'DM Sans',sans-serif;font-size:13px;padding:10px 20px;cursor:pointer;transition:all .2s}
+  .reset-btn:hover{border-color:rgba(255,255,255,0.3);color:var(--white)}
+
+  /* PASSWORD MODAL */
+  .modal-overlay{position:fixed;inset:0;background:rgba(0,10,20,0.85);z-index:100;display:flex;align-items:center;justify-content:center;animation:fadeIn .2s ease}
+  .modal-overlay.hidden{display:none}
+  .modal{background:#00334f;border:1px solid rgba(5,195,222,0.25);border-radius:14px;padding:32px;width:90%;max-width:360px;text-align:center;animation:fadeUp .3s ease}
+  .modal-icon{font-size:32px;margin-bottom:12px}
+  .modal-title{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;color:var(--white);margin-bottom:6px}
+  .modal-sub{font-size:13px;color:rgba(245,240,232,0.5);margin-bottom:20px}
+  .modal-input{width:100%;background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.12);border-radius:8px;padding:12px 16px;font-family:'DM Sans',sans-serif;font-size:15px;color:var(--white);outline:none;margin-bottom:12px;transition:border-color .2s}
+  .modal-input:focus{border-color:var(--teal)}
+  .modal-input.error{border-color:var(--red);animation:shake .3s ease}
+  .modal-btn{width:100%;padding:13px;background:var(--red);border:none;border-radius:8px;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:var(--white);cursor:pointer;transition:all .2s}
+  .modal-btn:hover{background:var(--red-dark)}
+  .modal-cancel{margin-top:10px;background:none;border:none;color:rgba(255,255,255,0.35);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;padding:6px}
+  .modal-cancel:hover{color:rgba(255,255,255,0.6)}
+  .modal-error{color:var(--red);font-size:12px;font-weight:600;margin-bottom:10px;display:none}
+  .modal-error.visible{display:block}
+
+  /* RESULTS PAGE */
+  .results-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;gap:10px;flex-wrap:wrap}
+  .results-toolbar-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:var(--white)}
+  .view-toggle{display:flex;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;overflow:hidden}
+  .view-btn{padding:8px 16px;background:none;border:none;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:rgba(245,240,232,0.5);cursor:pointer;transition:all .2s;letter-spacing:.5px}
+  .view-btn.active{background:var(--teal);color:var(--navy)}
+  .refresh-btn{display:flex;align-items:center;gap:6px;padding:8px 14px;background:rgba(5,195,222,0.08);border:1px solid rgba(5,195,222,0.25);border-radius:8px;color:var(--teal-light);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s}
+  .refresh-btn:hover{background:rgba(5,195,222,0.15);border-color:var(--teal)}
+  .refresh-btn.spinning span{display:inline-block;animation:spin .7s linear infinite}
+
+  /* TABLE VIEW */
+  .table-wrap{overflow-x:auto;border-radius:10px;border:1px solid rgba(255,255,255,0.08)}
+  table{width:100%;border-collapse:collapse;font-size:12px;min-width:600px}
+  thead tr{background:rgba(5,195,222,0.1)}
+  th{padding:10px 12px;text-align:center;font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:1.5px;color:var(--teal-light);border-bottom:1px solid rgba(255,255,255,0.08);white-space:nowrap}
+  th.name-col{text-align:left}
+  th.ts-col{text-align:left;font-size:10px}
+  tbody tr{border-bottom:1px solid rgba(255,255,255,0.05);transition:background .15s}
+  tbody tr:last-child{border-bottom:none}
+  tbody tr:hover{background:rgba(255,255,255,0.03)}
+  td{padding:9px 12px;text-align:center;color:rgba(245,240,232,0.7)}
+  td.name-col{text-align:left;font-weight:600;color:var(--white)}
+  td.ts-col{text-align:left;font-size:11px;color:var(--gray);white-space:nowrap}
+  .check-mark{color:var(--teal);font-size:14px;font-weight:700}
+
+  /* SHIFT VIEW */
+  .shift-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+  .shift-result-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;overflow:hidden}
+  .shift-result-header{padding:12px 16px;background:rgba(5,195,222,0.08);border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:space-between}
+  .shift-result-name{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:1px;color:var(--white)}
+  .shift-result-badge{font-size:11px;font-weight:700;background:var(--teal);color:var(--navy);border-radius:20px;padding:2px 9px}
+  .shift-result-badge.zero{background:rgba(255,255,255,0.1);color:var(--gray)}
+  .shift-result-body{padding:12px 16px}
+  .shift-person{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:13px;color:rgba(245,240,232,0.8);border-bottom:1px solid rgba(255,255,255,0.04)}
+  .shift-person:last-child{border-bottom:none}
+  .shift-person::before{content:'👤';font-size:11px}
+  .shift-empty{font-size:12px;color:var(--gray);font-style:italic}
+
+  /* LOADING / EMPTY */
+  .results-loading{text-align:center;padding:48px 24px;color:rgba(245,240,232,0.4);font-size:14px}
+  .spinner{width:32px;height:32px;border:3px solid rgba(5,195,222,0.2);border-top-color:var(--teal);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px}
+
+  /* FOOTER */
+  .footer{text-align:center;margin-top:36px;font-size:11px;color:rgba(245,240,232,0.25);letter-spacing:1px}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
 </style>
 </head>
 <body>
-
 <div class="container">
 
   <!-- HEADER -->
   <div class="header">
     <div class="brand-badge">PRO-VISION PAINTING & HOME IMPROVEMENT</div>
     <h1 class="title">HOME SHOW<br><span>AVAILABILITY</span></h1>
-    <p class="subtitle">May 22 – 25, 2026  •  Jacksonville, FL</p>
+    <p class="subtitle">May 22 – 25, 2026 · Jacksonville, FL</p>
     <div class="announcement">
       <strong>Hey team!</strong> We've got a bigger booth, activities to draw people in, and our main goal is to <strong>book consultations on the spot.</strong> Select every shift you're available for below and submit your availability.
     </div>
   </div>
 
-  <!-- MAIN FORM -->
-  <div id="pollForm">
-
-    <!-- NAME -->
-    <div class="name-section">
-      <label class="input-label" for="nameInput">Your Name</label>
-      <input class="name-input" id="nameInput" type="text" placeholder="First and last name" autocomplete="off">
-    </div>
-
-    <!-- SETUP SHIFTS -->
-    <div class="section-header">
-      <span class="section-tag">SETUP</span>
-      <div class="section-line"></div>
-    </div>
-
-    <div class="setup-card">
-      <div class="setup-icon">🔧</div>
-      <div class="setup-info">
-        <div class="setup-name">Thursday 5/21 — Setup Day</div>
-        <div class="setup-time">10:00 AM – 5:00 PM · Full day booth setup</div>
-      </div>
-      <button class="setup-btn" id="setup1" onclick="toggleSetup('setup1')">I'm in</button>
-    </div>
-
-    <div class="setup-card">
-      <div class="setup-icon">⚡</div>
-      <div class="setup-info">
-        <div class="setup-name">Friday 5/22 — Morning Setup</div>
-        <div class="setup-time">9:00 AM – 12:00 PM · Final setup before show opens</div>
-      </div>
-      <button class="setup-btn" id="setup2" onclick="toggleSetup('setup2')">I'm in</button>
-    </div>
-
-    <!-- SHOW SHIFTS -->
-    <div class="section-header">
-      <span class="section-tag">SHOW HOURS</span>
-      <div class="section-line"></div>
-    </div>
-
-    <!-- FRIDAY -->
-    <div class="day-card">
-      <div class="day-header">
-        <div class="day-name">Friday 5/22</div>
-        <div class="day-hours">12:00 PM – 6:00 PM</div>
-      </div>
-      <div class="day-body">
-        <button class="shift-btn" data-shift="fri1" onclick="toggleShift(this)">
-          <div class="shift-left">
-            <div class="shift-icon">🌅</div>
-            <div class="shift-info">
-              <span class="shift-label">Shift 1 — Afternoon</span>
-              <span class="shift-time">12:00 PM – 3:00 PM</span>
-            </div>
-          </div>
-          <div class="shift-right">
-            <span class="voter-count" id="count-fri1">0</span>
-            <div class="shift-check"><svg viewBox="0 0 12 12" fill="none"><polyline points="1.5,6 4.5,9 10.5,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          </div>
-        </button>
-        <button class="shift-btn" data-shift="fri2" onclick="toggleShift(this)">
-          <div class="shift-left">
-            <div class="shift-icon">🌆</div>
-            <div class="shift-info">
-              <span class="shift-label">Shift 2 — Evening</span>
-              <span class="shift-time">3:00 PM – 6:00 PM</span>
-            </div>
-          </div>
-          <div class="shift-right">
-            <span class="voter-count" id="count-fri2">0</span>
-            <div class="shift-check"><svg viewBox="0 0 12 12" fill="none"><polyline points="1.5,6 4.5,9 10.5,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          </div>
-        </button>
-      </div>
-    </div>
-
-    <!-- SATURDAY -->
-    <div class="day-card">
-      <div class="day-header">
-        <div class="day-name">Saturday 5/23</div>
-        <div class="day-hours">10:00 AM – 6:00 PM</div>
-      </div>
-      <div class="day-body">
-        <button class="shift-btn" data-shift="sat1" onclick="toggleShift(this)">
-          <div class="shift-left">
-            <div class="shift-icon">☀️</div>
-            <div class="shift-info">
-              <span class="shift-label">Shift 1 — Morning</span>
-              <span class="shift-time">10:00 AM – 2:00 PM</span>
-            </div>
-          </div>
-          <div class="shift-right">
-            <span class="voter-count" id="count-sat1">0</span>
-            <div class="shift-check"><svg viewBox="0 0 12 12" fill="none"><polyline points="1.5,6 4.5,9 10.5,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          </div>
-        </button>
-        <button class="shift-btn" data-shift="sat2" onclick="toggleShift(this)">
-          <div class="shift-left">
-            <div class="shift-icon">🌇</div>
-            <div class="shift-info">
-              <span class="shift-label">Shift 2 — Afternoon</span>
-              <span class="shift-time">2:00 PM – 6:00 PM</span>
-            </div>
-          </div>
-          <div class="shift-right">
-            <span class="voter-count" id="count-sat2">0</span>
-            <div class="shift-check"><svg viewBox="0 0 12 12" fill="none"><polyline points="1.5,6 4.5,9 10.5,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          </div>
-        </button>
-      </div>
-    </div>
-
-    <!-- SUNDAY -->
-    <div class="day-card">
-      <div class="day-header">
-        <div class="day-name">Sunday 5/24</div>
-        <div class="day-hours">11:00 AM – 6:00 PM</div>
-      </div>
-      <div class="day-body">
-        <button class="shift-btn" data-shift="sun1" onclick="toggleShift(this)">
-          <div class="shift-left">
-            <div class="shift-icon">☀️</div>
-            <div class="shift-info">
-              <span class="shift-label">Shift 1 — Morning</span>
-              <span class="shift-time">11:00 AM – 2:30 PM</span>
-            </div>
-          </div>
-          <div class="shift-right">
-            <span class="voter-count" id="count-sun1">0</span>
-            <div class="shift-check"><svg viewBox="0 0 12 12" fill="none"><polyline points="1.5,6 4.5,9 10.5,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          </div>
-        </button>
-        <button class="shift-btn" data-shift="sun2" onclick="toggleShift(this)">
-          <div class="shift-left">
-            <div class="shift-icon">🌆</div>
-            <div class="shift-info">
-              <span class="shift-label">Shift 2 — Afternoon</span>
-              <span class="shift-time">2:30 PM – 6:00 PM</span>
-            </div>
-          </div>
-          <div class="shift-right">
-            <span class="voter-count" id="count-sun2">0</span>
-            <div class="shift-check"><svg viewBox="0 0 12 12" fill="none"><polyline points="1.5,6 4.5,9 10.5,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          </div>
-        </button>
-      </div>
-    </div>
-
-    <!-- MONDAY -->
-    <div class="day-card">
-      <div class="day-header">
-        <div class="day-name">Monday 5/25</div>
-        <div class="day-hours">10:00 AM – 5:00 PM</div>
-      </div>
-      <div class="day-body">
-        <button class="shift-btn" data-shift="mon1" onclick="toggleShift(this)">
-          <div class="shift-left">
-            <div class="shift-icon">☀️</div>
-            <div class="shift-info">
-              <span class="shift-label">Shift 1 — Morning</span>
-              <span class="shift-time">10:00 AM – 1:30 PM</span>
-            </div>
-          </div>
-          <div class="shift-right">
-            <span class="voter-count" id="count-mon1">0</span>
-            <div class="shift-check"><svg viewBox="0 0 12 12" fill="none"><polyline points="1.5,6 4.5,9 10.5,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          </div>
-        </button>
-        <button class="shift-btn" data-shift="mon2" onclick="toggleShift(this)">
-          <div class="shift-left">
-            <div class="shift-icon">🌇</div>
-            <div class="shift-info">
-              <span class="shift-label">Shift 2 — Afternoon</span>
-              <span class="shift-time">1:30 PM – 5:00 PM</span>
-            </div>
-          </div>
-          <div class="shift-right">
-            <span class="voter-count" id="count-mon2">0</span>
-            <div class="shift-check"><svg viewBox="0 0 12 12" fill="none"><polyline points="1.5,6 4.5,9 10.5,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          </div>
-        </button>
-      </div>
-    </div>
-
-    <!-- SUBMIT -->
-    <div class="submit-section">
-      <button class="submit-btn" id="submitBtn" onclick="submitPoll()">SUBMIT MY AVAILABILITY</button>
-      <div class="error-msg" id="errorMsg">Please enter your name and select at least one shift.</div>
-    </div>
-
-    <!-- RESULTS -->
-    <div class="results-toggle">
-      <button class="results-btn" onclick="toggleResults()">📊 View current responses</button>
-      <div class="results-panel" id="resultsPanel">
-        <div class="results-title">CURRENT AVAILABILITY</div>
-        <div id="resultsContent"></div>
-      </div>
-    </div>
-
+  <!-- NAV -->
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="switchTab('poll')">📋 Submit Availability</button>
+    <button class="nav-tab" onclick="openResults()">📊 View Responses</button>
   </div>
 
-  <!-- SUCCESS STATE -->
-  <div class="success-panel" id="successPanel">
-    <div class="success-icon">✓</div>
-    <div class="success-title">YOU'RE IN!</div>
-    <p class="success-sub">Thanks for submitting your availability.<br>Zach will follow up with confirmed shifts shortly.</p>
-    <div class="selection-summary" id="selectionSummary"></div>
-    <button class="reset-btn" onclick="resetPoll()">Submit for another team member</button>
+  <!-- POLL PAGE -->
+  <div class="page active" id="pollPage">
+    <div id="pollForm">
+      <div style="margin-bottom:28px">
+        <label class="input-label" for="nameInput">Your Name</label>
+        <input class="name-input" id="nameInput" type="text" placeholder="First and last name" autocomplete="off">
+      </div>
+
+      <div class="section-header"><span class="section-tag">SETUP</span><div class="section-line"></div></div>
+      <div class="setup-card">
+        <div class="setup-icon">🔧</div>
+        <div class="setup-info">
+          <div class="setup-name">Thursday 5/21 — Setup Day</div>
+          <div class="setup-time">10:00 AM – 5:00 PM · Full day booth setup</div>
+        </div>
+        <button class="setup-btn" id="setup1" onclick="toggleSetup('setup1')">I'm in</button>
+      </div>
+      <div class="setup-card">
+        <div class="setup-icon">⚡</div>
+        <div class="setup-info">
+          <div class="setup-name">Friday 5/22 — Morning Setup</div>
+          <div class="setup-time">9:00 AM – 12:00 PM · Final setup before show opens</div>
+        </div>
+        <button class="setup-btn" id="setup2" onclick="toggleSetup('setup2')">I'm in</button>
+      </div>
+
+      <div class="section-header"><span class="section-tag">SHOW HOURS</span><div class="section-line"></div></div>
+
+      <div class="day-card">
+        <div class="day-header"><div class="day-name">Friday 5/22</div><div class="day-hours">12:00 PM – 6:00 PM</div></div>
+        <div class="day-body">
+          <button class="shift-btn" data-shift="fri1" onclick="toggleShift(this)">
+            <div class="shift-left"><div class="shift-icon">🌅</div><div class="shift-info"><span class="shift-label">Shift 1 — Afternoon</span><span class="shift-time">12:00 PM – 3:00 PM</span></div></div>
+            <div class="shift-right"><div class="shift-check"><svg viewBox="0 0 12 12" fill="none"><polyline points="1.5,6 4.5,9 10.5,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+          </button>
+          <button class="shift-btn" data-shift="fri2" onclick="toggleShift(this)">
+            <div class="shift-left"><div class="shift-icon">🌆</div><div class="shift-info"><span class="shift-label">Shift 2 — Evening</span><span class="shift-time">3:00 PM – 6:00 PM</span></div></div>
+            <div class="shift-right"><div class="shift-check"><svg viewBox="0 0 12 12" fill="none"><polyline points="1.5,6 4.5,9 10.5,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+          </button>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-header"><div class="day-name">Saturday 5/23</div><div class="day-hours">10:00 AM – 6:00 PM</div></div>
+        <div class="day-body">
+          <button class="shift-btn" data-shift="sat1" onclick="toggleShift(this)">
+            <div class="shift-left"><div class="shift-icon">☀️</div><div class="shift-info"><span class="shift-label">Shift 1 — Morning</span><span class="shift-time">10:00 AM – 2:00 PM</span></div></div>
+            <div class="shift-right"><div class="shift-check"><svg viewBox="0 0 12 12" fill="none"><polyline points="1.5,6 4.5,9 10.5,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+          </button>
+          <button class="shift-btn" data-shift="sat2" onclick="toggleShift(this)">
+            <div class="shift-left"><div class="shift-icon">🌇</div><div class="shift-info"><span class="shift-label">Shift 2 — Afternoon</span><span class="shift-time">2:00 PM – 6:00 PM</span></div></div>
+            <div class="shift-right"><div class="shift-check"><svg viewBox="0 0 12 12" fill="none"><polyline points="1.5,6 4.5,9 10.5,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+          </button>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-header"><div class="day-name">Sunday 5/24</div><div class="day-hours">11:00 AM – 6:00 PM</div></div>
+        <div class="day-body">
+          <button class="shift-btn" data-shift="sun1" onclick="toggleShift(this)">
+            <div class="shift-left"><div class="shift-icon">☀️</div><div class="shift-info"><span class="shift-label">Shift 1 — Morning</span><span class="shift-time">11:00 AM – 2:30 PM</span></div></div>
+            <div class="shift-right"><div class="shift-check"><svg viewBox="0 0 12 12" fill="none"><polyline points="1.5,6 4.5,9 10.5,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+          </button>
+          <button class="shift-btn" data-shift="sun2" onclick="toggleShift(this)">
+            <div class="shift-left"><div class="shift-icon">🌆</div><div class="shift-info"><span class="shift-label">Shift 2 — Afternoon</span><span class="shift-time">2:30 PM – 6:00 PM</span></div></div>
+            <div class="shift-right"><div class="shift-check"><svg viewBox="0 0 12 12" fill="none"><polyline points="1.5,6 4.5,9 10.5,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+          </button>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-header"><div class="day-name">Monday 5/25</div><div class="day-hours">10:00 AM – 5:00 PM</div></div>
+        <div class="day-body">
+          <button class="shift-btn" data-shift="mon1" onclick="toggleShift(this)">
+            <div class="shift-left"><div class="shift-icon">☀️</div><div class="shift-info"><span class="shift-label">Shift 1 — Morning</span><span class="shift-time">10:00 AM – 1:30 PM</span></div></div>
+            <div class="shift-right"><div class="shift-check"><svg viewBox="0 0 12 12" fill="none"><polyline points="1.5,6 4.5,9 10.5,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+          </button>
+          <button class="shift-btn" data-shift="mon2" onclick="toggleShift(this)">
+            <div class="shift-left"><div class="shift-icon">🌇</div><div class="shift-info"><span class="shift-label">Shift 2 — Afternoon</span><span class="shift-time">1:30 PM – 5:00 PM</span></div></div>
+            <div class="shift-right"><div class="shift-check"><svg viewBox="0 0 12 12" fill="none"><polyline points="1.5,6 4.5,9 10.5,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+          </button>
+        </div>
+      </div>
+
+      <div class="submit-section">
+        <button class="submit-btn" id="submitBtn" onclick="submitPoll()">SUBMIT MY AVAILABILITY</button>
+        <div class="error-msg" id="errorMsg">Please enter your name and select at least one shift.</div>
+      </div>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="success-panel" id="successPanel">
+      <div class="success-icon">✓</div>
+      <div class="success-title">YOU'RE IN!</div>
+      <p class="success-sub">Thanks for submitting your availability.<br>Zach will follow up with confirmed shifts shortly.</p>
+      <div class="selection-summary" id="selectionSummary"></div>
+      <button class="reset-btn" onclick="resetPoll()">Submit for another team member</button>
+    </div>
   </div>
 
-  <div class="footer">PRO-VISION PAINTING & HOME IMPROVEMENT &nbsp;·&nbsp; JACKSONVILLE, FL</div>
+  <!-- RESULTS PAGE -->
+  <div class="page" id="resultsPage">
+    <div class="results-toolbar">
+      <div class="results-toolbar-title">TEAM RESPONSES</div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <div class="view-toggle">
+          <button class="view-btn active" id="viewTableBtn" onclick="setView('table')">🗂 Table</button>
+          <button class="view-btn" id="viewShiftBtn" onclick="setView('shift')">📅 By Shift</button>
+        </div>
+        <button class="refresh-btn" id="refreshBtn" onclick="loadResults()"><span>↻</span> Refresh</button>
+      </div>
+    </div>
+    <div id="resultsContent">
+      <div class="results-loading"><div class="spinner"></div>Loading responses...</div>
+    </div>
+  </div>
+
 </div>
 
+<!-- PASSWORD MODAL -->
+<div class="modal-overlay hidden" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-icon">🔒</div>
+    <div class="modal-title">RESULTS ACCESS</div>
+    <div class="modal-sub">Enter the password to view team responses</div>
+    <div class="modal-error" id="modalError">Incorrect password. Try again.</div>
+    <input class="modal-input" id="pwInput" type="password" placeholder="Password" onkeydown="if(event.key==='Enter')checkPassword()">
+    <button class="modal-btn" onclick="checkPassword()">UNLOCK</button>
+    <button class="modal-cancel" onclick="closeModal()">Cancel</button>
+  </div>
+</div>
+
+<div class="footer">PRO-VISION PAINTING & HOME IMPROVEMENT · JACKSONVILLE, FL</div>
+
 <script>
-// State
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzu1j-F5pdnorV9XpGhnLKPEO9lZLomkvg_uWXse8rdlz_4FgpEuhDUjrD97n5JCQq9/exec';
+const PASSWORD = 'Pro Vision Polls';
+
 const selections = new Set();
 const setupSelections = new Set();
-let submitted = false;
-
-// Shared vote counts (persisted in memory per session, shared across submissions)
-const voteCounts = {
-  setup1: 0, setup2: 0,
-  fri1: 0, fri2: 0,
-  sat1: 0, sat2: 0,
-  sun1: 0, sun2: 0,
-  mon1: 0, mon2: 0
-};
+let resultsUnlocked = false;
+let currentView = 'table';
+let cachedData = null;
 
 const shiftLabels = {
-  setup1: 'Thu 5/21 — Setup (10am–5pm)',
-  setup2: 'Fri 5/22 — Morning Setup (9am–12pm)',
-  fri1:   'Fri 5/22 — Shift 1 (12–3pm)',
-  fri2:   'Fri 5/22 — Shift 2 (3–6pm)',
-  sat1:   'Sat 5/23 — Shift 1 (10am–2pm)',
-  sat2:   'Sat 5/23 — Shift 2 (2–6pm)',
-  sun1:   'Sun 5/24 — Shift 1 (11am–2:30pm)',
-  sun2:   'Sun 5/24 — Shift 2 (2:30–6pm)',
-  mon1:   'Mon 5/25 — Shift 1 (10am–1:30pm)',
-  mon2:   'Mon 5/25 — Shift 2 (1:30–5pm)'
+  setup1:'Thu 5/21 Setup (10am–5pm)',
+  setup2:'Fri 5/22 Setup (9am–12pm)',
+  fri1:'Fri 5/22 — Shift 1 (12–3pm)',
+  fri2:'Fri 5/22 — Shift 2 (3–6pm)',
+  sat1:'Sat 5/23 — Shift 1 (10am–2pm)',
+  sat2:'Sat 5/23 — Shift 2 (2–6pm)',
+  sun1:'Sun 5/24 — Shift 1 (11am–2:30pm)',
+  sun2:'Sun 5/24 — Shift 2 (2:30–6pm)',
+  mon1:'Mon 5/25 — Shift 1 (10am–1:30pm)',
+  mon2:'Mon 5/25 — Shift 2 (1:30–5pm)'
 };
 
-function toggleShift(btn) {
-  const shift = btn.dataset.shift;
-  if (selections.has(shift)) {
-    selections.delete(shift);
-    btn.classList.remove('selected');
+// Maps sheet column headers to shift IDs
+const headerToId = {
+  'Thu 5/21 Setup':'setup1','Fri 5/22 Setup':'setup2',
+  'Fri S1 (12pm-3pm)':'fri1','Fri S2 (3pm-6pm)':'fri2',
+  'Sat S1 (10am-2pm)':'sat1','Sat S2 (2pm-6pm)':'sat2',
+  'Sun S1 (11-2:30pm)':'sun1','Sun S2 (2:30pm-6pm)':'sun2',
+  'Mon S1 (10am-1:30pm)':'mon1','Mon S2 (1:30pm-5pm)':'mon2'
+};
+
+const shiftOrder = ['setup1','setup2','fri1','fri2','sat1','sat2','sun1','sun2','mon1','mon2'];
+
+// ── TABS ──────────────────────────────────────────────
+function switchTab(tab) {
+  document.querySelectorAll('.nav-tab').forEach((t,i) => t.classList.toggle('active', (tab==='poll'&&i===0)||(tab==='results'&&i===1)));
+  document.getElementById('pollPage').classList.toggle('active', tab==='poll');
+  document.getElementById('resultsPage').classList.toggle('active', tab==='results');
+}
+
+function openResults() {
+  if (resultsUnlocked) { switchTab('results'); loadResults(); return; }
+  document.getElementById('modalOverlay').classList.remove('hidden');
+  setTimeout(() => document.getElementById('pwInput').focus(), 100);
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.add('hidden');
+  document.getElementById('pwInput').value = '';
+  document.getElementById('modalError').classList.remove('visible');
+  document.getElementById('pwInput').classList.remove('error');
+}
+
+function checkPassword() {
+  const val = document.getElementById('pwInput').value;
+  if (val === PASSWORD) {
+    resultsUnlocked = true;
+    closeModal();
+    switchTab('results');
+    loadResults();
   } else {
-    selections.add(shift);
-    btn.classList.add('selected');
+    const inp = document.getElementById('pwInput');
+    inp.classList.add('error');
+    document.getElementById('modalError').classList.add('visible');
+    inp.value = '';
+    setTimeout(() => inp.classList.remove('error'), 400);
   }
+}
+
+// ── POLL ──────────────────────────────────────────────
+function toggleShift(btn) {
+  const s = btn.dataset.shift;
+  selections.has(s) ? selections.delete(s) : selections.add(s);
+  btn.classList.toggle('selected', selections.has(s));
 }
 
 function toggleSetup(id) {
   const btn = document.getElementById(id);
-  if (setupSelections.has(id)) {
-    setupSelections.delete(id);
-    btn.classList.remove('selected');
-    btn.textContent = "I'm in";
-  } else {
-    setupSelections.add(id);
-    btn.classList.add('selected');
-  }
+  if (setupSelections.has(id)) { setupSelections.delete(id); btn.classList.remove('selected'); btn.textContent = "I'm in"; }
+  else { setupSelections.add(id); btn.classList.add('selected'); }
 }
 
 async function submitPoll() {
   const name = document.getElementById('nameInput').value.trim();
-  const totalSelected = selections.size + setupSelections.size;
-  const errorMsg = document.getElementById('errorMsg');
-  const submitBtn = document.getElementById('submitBtn');
-
-  if (!name || totalSelected === 0) {
-    errorMsg.classList.add('visible');
-    setTimeout(() => errorMsg.classList.remove('visible'), 3000);
-    return;
-  }
-
-  // Disable button while submitting
-  submitBtn.disabled = true;
-  submitBtn.textContent = 'SUBMITTING...';
-
+  const total = selections.size + setupSelections.size;
+  const errEl = document.getElementById('errorMsg');
+  const btn = document.getElementById('submitBtn');
+  if (!name || total === 0) { errEl.classList.add('visible'); setTimeout(() => errEl.classList.remove('visible'), 3000); return; }
+  btn.disabled = true; btn.textContent = 'SUBMITTING...';
   const all = [...setupSelections, ...selections];
-  const shiftList = all.map(s => shiftLabels[s] || s).join(', ');
-
   try {
-    await fetch('https://script.google.com/macros/s/AKfycbzu1j-F5pdnorV9XpGhnLKPEO9lZLomkvg_uWXse8rdlz_4FgpEuhDUjrD97n5JCQq9/exec', {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, shifts: all })
-    });
-  } catch (err) {
-    console.error('Submission error:', err);
-  }
-
-  // Update vote counts
-  selections.forEach(s => { voteCounts[s]++; updateCount(s); });
-  setupSelections.forEach(s => { voteCounts[s]++; });
-
-  // Build summary
+    await fetch(SCRIPT_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ name, shifts: all }) });
+  } catch(e) { console.error(e); }
   const summary = document.getElementById('selectionSummary');
-  summary.innerHTML = all.map(s =>
-    `<div class="summary-item">${shiftLabels[s] || s}</div>`
-  ).join('');
-
-  // Show success
+  summary.innerHTML = all.map(s => `<div class="summary-item">${shiftLabels[s]||s}</div>`).join('');
   document.getElementById('pollForm').style.display = 'none';
   document.getElementById('successPanel').style.display = 'block';
-  submitted = true;
-}
-
-function updateCount(shiftId) {
-  const el = document.getElementById('count-' + shiftId);
-  if (el) {
-    const prev = parseInt(el.textContent) || 0;
-    el.textContent = prev + 1;
-    el.style.transform = 'scale(1.4)';
-    el.style.color = '#F6BE00';
-    setTimeout(() => {
-      el.style.transform = 'scale(1)';
-      el.style.color = '';
-    }, 300);
-  }
+  cachedData = null; // invalidate cache
 }
 
 function resetPoll() {
-  selections.clear();
-  setupSelections.clear();
+  selections.clear(); setupSelections.clear();
   document.getElementById('nameInput').value = '';
   document.querySelectorAll('.shift-btn.selected').forEach(b => b.classList.remove('selected'));
-  document.querySelectorAll('.setup-btn.selected').forEach(b => {
-    b.classList.remove('selected');
-    b.textContent = "I'm in";
-  });
-  const submitBtn = document.getElementById('submitBtn');
-  submitBtn.disabled = false;
-  submitBtn.textContent = 'SUBMIT MY AVAILABILITY';
+  document.querySelectorAll('.setup-btn.selected').forEach(b => { b.classList.remove('selected'); b.textContent = "I'm in"; });
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = false; btn.textContent = 'SUBMIT MY AVAILABILITY';
   document.getElementById('pollForm').style.display = 'block';
   document.getElementById('successPanel').style.display = 'none';
 }
 
-function toggleResults() {
-  const panel = document.getElementById('resultsPanel');
-  panel.classList.toggle('visible');
-  if (panel.classList.contains('visible')) renderResults();
+// ── RESULTS ───────────────────────────────────────────
+function setView(v) {
+  currentView = v;
+  document.getElementById('viewTableBtn').classList.toggle('active', v==='table');
+  document.getElementById('viewShiftBtn').classList.toggle('active', v==='shift');
+  if (cachedData) renderResults(cachedData);
 }
 
-function renderResults() {
-  const maxVotes = Math.max(...Object.values(voteCounts), 1);
+async function loadResults() {
   const content = document.getElementById('resultsContent');
-  content.innerHTML = Object.entries(voteCounts).map(([key, count]) => {
-    const pct = Math.round((count / maxVotes) * 100);
-    return `
-      <div class="result-row">
-        <div class="result-label">${shiftLabels[key] || key}</div>
-        <div class="result-bar-wrap">
-          <div class="result-bar" style="width:${pct}%"></div>
-        </div>
-        <div class="result-count">${count}</div>
-      </div>
-    `;
-  }).join('');
-  // Trigger bar animation
-  requestAnimationFrame(() => {
-    document.querySelectorAll('.result-bar').forEach((bar, i) => {
-      const key = Object.keys(voteCounts)[i];
-      const count = voteCounts[key];
-      const maxV = Math.max(...Object.values(voteCounts), 1);
-      setTimeout(() => { bar.style.width = Math.round((count/maxV)*100) + '%'; }, i * 40);
+  const refreshBtn = document.getElementById('refreshBtn');
+  content.innerHTML = '<div class="results-loading"><div class="spinner"></div>Loading responses...</div>';
+  refreshBtn.classList.add('spinning');
+  try {
+    const res = await fetch(SCRIPT_URL + '?action=get', { cache: 'no-store' });
+    const data = await res.json();
+    cachedData = data;
+    renderResults(data);
+  } catch(e) {
+    content.innerHTML = '<div class="results-loading">⚠️ Could not load responses. Make sure your Apps Script is redeployed and try refreshing.</div>';
+  }
+  refreshBtn.classList.remove('spinning');
+}
+
+function renderResults(rows) {
+  const content = document.getElementById('resultsContent');
+  if (!rows || rows.length === 0) {
+    content.innerHTML = '<div class="results-loading">No responses yet. Check back after the team submits!</div>';
+    return;
+  }
+  currentView === 'table' ? renderTable(rows, content) : renderShiftView(rows, content);
+}
+
+function renderTable(rows, content) {
+  const shortLabels = {
+    setup1:'Thu Setup',setup2:'Fri Setup',
+    fri1:'Fri S1',fri2:'Fri S2',
+    sat1:'Sat S1',sat2:'Sat S2',
+    sun1:'Sun S1',sun2:'Sun S2',
+    mon1:'Mon S1',mon2:'Mon S2'
+  };
+  let html = `<div class="table-wrap"><table><thead><tr>
+    <th class="ts-col">Submitted</th>
+    <th class="name-col">Name</th>
+    ${shiftOrder.map(id => `<th>${shortLabels[id]}</th>`).join('')}
+  </tr></thead><tbody>`;
+
+  rows.forEach(row => {
+    // Build set of shift IDs this person selected
+    const personShifts = new Set();
+    Object.entries(row).forEach(([col, val]) => {
+      if (val === '✓' && headerToId[col]) personShifts.add(headerToId[col]);
+    });
+    html += `<tr>
+      <td class="ts-col">${row['Timestamp']||''}</td>
+      <td class="name-col">${row['Name']||''}</td>
+      ${shiftOrder.map(id => `<td>${personShifts.has(id) ? '<span class="check-mark">✓</span>' : ''}</td>`).join('')}
+    </tr>`;
+  });
+  html += '</tbody></table></div>';
+  content.innerHTML = html;
+}
+
+function renderShiftView(rows, content) {
+  // Build map: shiftId -> [names]
+  const shiftPeople = {};
+  shiftOrder.forEach(id => shiftPeople[id] = []);
+  rows.forEach(row => {
+    Object.entries(row).forEach(([col, val]) => {
+      const id = headerToId[col];
+      if (val === '✓' && id) shiftPeople[id].push(row['Name'] || 'Unknown');
     });
   });
+
+  let html = `<div class="shift-grid">`;
+  shiftOrder.forEach(id => {
+    const people = shiftPeople[id];
+    const count = people.length;
+    html += `<div class="shift-result-card">
+      <div class="shift-result-header">
+        <div class="shift-result-name">${shiftLabels[id]}</div>
+        <div class="shift-result-badge ${count===0?'zero':''}">${count} ${count===1?'person':'people'}</div>
+      </div>
+      <div class="shift-result-body">
+        ${count > 0
+          ? people.map(n => `<div class="shift-person">${n}</div>`).join('')
+          : '<div class="shift-empty">No one yet</div>'}
+      </div>
+    </div>`;
+  });
+  html += '</div>';
+  content.innerHTML = html;
 }
 </script>
 </body>
