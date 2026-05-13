@@ -963,7 +963,6 @@ function updateCount(shiftId) {
 }
 
 function resetPoll() {
-  // Clear state
   selections.clear();
   setupSelections.clear();
   document.getElementById('nameInput').value = '';
@@ -972,6 +971,9 @@ function resetPoll() {
     b.classList.remove('selected');
     b.textContent = "I'm in";
   });
+  const submitBtn = document.getElementById('submitBtn');
+  submitBtn.disabled = false;
+  submitBtn.textContent = 'SUBMIT MY AVAILABILITY';
   document.getElementById('pollForm').style.display = 'block';
   document.getElementById('successPanel').style.display = 'none';
 }
