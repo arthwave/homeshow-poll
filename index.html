@@ -926,7 +926,7 @@ async function submitPoll() {
       method: 'POST',
       mode: 'no-cors',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, shifts: shiftList })
+      body: JSON.stringify({ name, shifts: all })
     });
   } catch (err) {
     console.error('Submission error:', err);
